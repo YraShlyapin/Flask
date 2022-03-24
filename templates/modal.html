@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <button value="popup" class="popup_link">asd</button>
+    <div id="popup" class="popup">
+        <div class="popup_body">
+            <div class="popup_content">
+                <button class="popup_close" value="popup">×</button>
+                <div class="popup_title">Вход</div>
+                <div class="popup_text">
+                    <form action="#" method="post">
+                        <!-- http://htmlbook.ru/html/input -->
+                        <div>
+                            <input type="text" id="username" required class="valudebl" autocomplete="off">
+                            <label for="username">введите имя</label>
+                        </div>
+                        <div>
+                            <input type="text" id="passord" required class="valudebl" autocomplete="off">
+                            <label for="passord">введите пароль</label>
+                        </div>
+                        <button type="submit" class="posts">войти</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <script>
+        const popup_links = document.querySelectorAll(".popup_link")
+        const popup_close = document.querySelectorAll(".popup_close")
+
+        for (const popupLink of popup_links){
+            popupLink.addEventListener("click",function(e){
+                const name = popupLink.getAttribute('value')
+                const current = document.getElementById(name)
+                current.classList.add("open")
+               document.body.style.overflow = "hidden"
+            })
+        }
+
+        for (const popupCloseNow of popup_close){
+            popupCloseNow.addEventListener("click",function(e){
+                const name = popupCloseNow.getAttribute('value')
+                const current = document.getElementById(name)
+                current.classList.remove('open')
+                document.body.style.overflow = "auto"
+            })
+        }
+    </script>
+</body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+    *{
+        margin: 0;
+    }
+    .popup{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+        top: 0;
+        left: 0;
+
+        opacity: 0;
+        visibility: hidden;
+        /*overflow-y: auto;*/
+        /*overflow-x: hidden;*/
+        transition: all 1s;
+    }
+    .popup.open{
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .popup.open .popup_body{
+        transform: translate(0px,0px);
+        opacity: 1;
+    }
+
+    /*.popup:target{
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .popup:target .popup_body{
+        transform: translate(0px,0px);
+        opacity: 1;
+    }*/
+
+    .popup_body{
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 10px;
+        transition: all 1s;
+        opacity: 0;
+        transform: perspective(600px) translate(0px,-75%) rotate3d(1,0,0,90deg);
+    }
+    .popup_content{
+        position: relative;
+        font-family: 'Roboto', sans-serif;
+        background-color: #fff;
+        color: black;
+        min-width: 500px;
+        max-width: 800px;
+        padding: 30px;
+        border-radius: 20px;
+    }
+    .popup_title{
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+    .popup_text{
+        font-size: 20px;
+    }
+
+    .popup_text div{
+        position: relative;
+        margin-top: 35px;
+    }
+
+    .popup_text div input{
+        width: 100%;
+        height: 30px;
+    }
+
+    .popup_text div label{
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        user-select: none;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        transition: all 1s;
+    }
+
+    .popup_text input:valid+label,  .popup_text input:focus+label{
+        color: hsl(120, 100%, 25%);
+        transform: translate(0px,-35px);
+    }
+
+    .popup_text label::after{
+        opacity: 0;
+        content: '';
+        width: 100%;
+        height: 2px;
+        border-radius: 5px;
+        background-color: #98FB98;
+        position: absolute;
+        bottom: -2px;
+        transition: all 1s;
+    }
+
+    .popup_text input:valid+label::after, .popup_text input:focus+label::after{
+        opacity: 1;
+    }
+
+    .popup_close{
+        /*null*/
+        color: inherit;
+        border: none;
+        font: inherit;
+        background-color: transparent;
+        cursor: pointer;
+    }
+    .popup_close{
+        font-size: 30px;
+        position: absolute;
+        font-weight: 1000;
+        top: 15px;
+        right: 20px;
+        transition: all 200ms;
+    }
+
+    .popup_close:hover{
+        color: red;
+    }
+    
+    .posts{
+        margin-top: 20px;
+        font-size: 20px;
+        padding: 5px 10px;
+        background-color: rgba(0, 0, 0, 0);
+        border: 1px solid black;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 300ms;
+    }
+
+    .posts:hover{
+        background-color: rgb(152, 251, 152);
+        box-shadow: 0px 0px 10px 7px rgba(152, 251, 152, 0.4);
+        color: black;
+    }
+    
+</style>
+</html>

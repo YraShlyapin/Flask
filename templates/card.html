@@ -1,0 +1,31 @@
+{% extends "gallery.html" %}
+
+{%block content%}
+    {%if all%}
+        {%for item in all %}
+            <a href="#" class="card">
+                <div>
+                    {{item.id}}
+                    <h1>{{item.title}}</h1>
+                    <img src="{{item.url_}}" alt="" width="200px">
+<!--                    <p>{{item.text_}}</p>-->
+                </div>
+                <form action="{{url_for('delete_movie')}}" method="post">
+                    <button value="{{item.id}}" name="id" type="submit">asd</button>
+                </form>
+            </a>
+            
+            
+
+
+
+            <style>
+                .card{
+                    text-decoration: none;
+                    color: black;
+                    
+                }
+            </style>
+        {%endfor%}
+    {%endif%}
+{% endblock %}

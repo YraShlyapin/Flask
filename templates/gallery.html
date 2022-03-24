@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- http://htmlbook.ru/html/button/formmethod -->
+
+{% include 'header.html' without context %}
+
+    <form action="{{url_for('log_in')}}" method="post">
+        <input type="text" name="name">
+        <input type="text" name="password">
+        <button type="submit">войти</button>
+    </form>
+
+    <form action="{{url_for('add_user')}}" method="post">
+        <input type="text" name="name">
+        <input type="text" name="password">
+        <input type="text">
+        <button type="submit">зарегистрироватся</button>
+    </form>
+
+    <form action="{{ url_for('add_movie') }}" method="post" id="block">
+        <label>
+            название фильма:
+            <input type="text" name="title" id="">
+            <br>
+        </label>
+        <label>
+            ссылка на картинку:
+            <input type="text" name="url" id=""><br>
+        </label>
+        <label>
+            описание фильма:
+            <input type="text" name="text" id=""><br>
+        </label>
+        
+        <button type="submit">запостить</button>
+    </form>
+
+    <div id="content">
+        {%block content%}
+        {%endblock%}
+    </div>
+</body>
+<style>
+    #block label{
+        width: 320px;
+        margin-bottom: 10px;
+    }
+    #block input{
+        right: 0;
+    }
+    #content{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+</style>
+</html>
