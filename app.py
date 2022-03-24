@@ -1,4 +1,4 @@
-from tabnanny import check
+import os
 from flask import Flask, redirect, render_template, url_for, request
 from db.main import check_password, get_User, init_db_app, get_db, add_entities, delete_entitie,add_User
 from entities.Movie import Movie
@@ -6,10 +6,9 @@ from entities.User import User
 
 
 app = Flask(__name__)
-app.config.from_mapping(DATABASE = 'db/db.sqlite')
+app.config.from_mapping(DATABASE = os.path.join(app.root_path,"db\db.sqlite"))
 init_db_app(app)
 
-data = {"default":("none","https://www.imgonline.com.ua/examples/bee-on-daisy.jpg",1),"name":("Саня","Егор",2)}
 
 # @app.route("/")
 # def main_page():

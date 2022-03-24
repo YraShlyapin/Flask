@@ -42,8 +42,6 @@ def init_db():
 
 
 def add_entities(movie:Movie):
-#     a = User(123,"asd")
-#     print(a.get())
     db = get_db()
     db.execute("INSERT INTO movie (title,url_,text_) VALUES (?,?,?)",(movie.get()))
     db.commit()
