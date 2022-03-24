@@ -8,9 +8,34 @@
     <button value="popup" class="popup_link">asd</button>
     <div id="popup" class="popup">
         <div class="popup_body">
+            <a class="popup_close link" value="popup"></a>
             <div class="popup_content">
                 <button class="popup_close" value="popup">×</button>
                 <div class="popup_title">Вход</div>
+                <div class="popup_text">
+                    <form action="#" method="post">
+                        <!-- http://htmlbook.ru/html/input -->
+                        <div>
+                            <input type="text" id="username" required class="valudebl" autocomplete="off">
+                            <label for="username">введите имя</label>
+                        </div>
+                        <div>
+                            <input type="text" id="passord" required class="valudebl" autocomplete="off">
+                            <label for="passord">введите пароль</label>
+                        </div>
+                        <button type="submit" class="posts">войти</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button value="links" class="popup_link">asd</button>
+    <div id="links" class="popup">
+        <div class="popup_body">
+            <a class="popup_close link" value="links"></a>
+            <div class="popup_content">
+                <button class="popup_close" value="links">×</button>
+                <div class="popup_title">Lorem, ipsum dolor.</div>
                 <div class="popup_text">
                     <form action="#" method="post">
                         <!-- http://htmlbook.ru/html/input -->
@@ -98,9 +123,9 @@
         align-items: center;
         justify-content: center;
         padding: 30px 10px;
-        transition: all 1s;
+        transition: all 1s, opacity 1.4s;
         opacity: 0;
-        transform: perspective(600px) translate(0px,-75%) rotate3d(1,0,0,90deg);
+        transform: perspective(600px) translate(0px,-100%) rotate3d(1,0,0,90deg);
     }
     .popup_content{
         position: relative;
@@ -200,5 +225,9 @@
         color: black;
     }
     
+    .popup_close.link{
+        width: 100%;
+        height: 100vh;
+    }
 </style>
 </html>
