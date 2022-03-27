@@ -14,14 +14,14 @@
             <button class="popup_close" value="login">×</button>
             <div class="popup_title">Вход</div>
             <div class="popup_text">
-                <form action="#" method="post">
+                <form action="/add_user" method="post">
                     <!-- http://htmlbook.ru/html/input -->
                     <div>
-                        <input type="text" id="username" required class="valudebl" autocomplete="off">
+                        <input type="text" id="username" class="valudebl" autocomplete="off" name="name">
                         <label for="username">введите имя</label>
                     </div>
                     <div>
-                        <input type="text" id="passord" required class="valudebl" autocomplete="off">
+                        <input type="text" id="passord" class="valudebl" autocomplete="off" name="password">
                         <label for="passord">введите пароль</label>
                     </div>
                     <button type="submit" class="posts">войти</button>
@@ -41,12 +41,16 @@
                 <form action="#" method="post">
                     <!-- http://htmlbook.ru/html/input -->
                     <div>
-                        <input type="text" id="username" required class="valudebl" autocomplete="off">
+                        <input type="text" id="username" class="valudebl" autocomplete="off">
                         <label for="username">введите имя</label>
                     </div>
                     <div>
-                        <input type="text" id="passord" required class="valudebl" autocomplete="off">
+                        <input type="text" id="passord" class="valudebl" autocomplete="off">
                         <label for="passord">введите пароль</label>
+                    </div>
+                    <div>
+                        <input type="text" id="passord" class="valudebl" autocomplete="off" pattern="[A-Z]">
+                        <label for="passord">повторите пароль</label>
                     </div>
                     <button type="submit" class="posts">войти</button>
                 </form>
@@ -54,6 +58,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    //может быть это нужно реализовать спомощью промисов
+    let validebls = document.querySelectorAll('.valudebl')
+    console.log(validebls)
+    for(const validebl of validebls)
+    setInterval(()=>{
+        if(validebl.value!=''){
+            validebl.classList.add('active')
+        }
+        else{
+            validebl.classList.remove('active')
+        }
+    },10)
+</script>
 
 <script>
     const popup_links = document.querySelectorAll(".popup_link")
@@ -160,6 +179,7 @@
         height: 45px;
         border-radius: 25px;
         border: 1px solid black;
+        transition: all 1s;
     }
 
     .popup_text div label{
@@ -173,8 +193,12 @@
         transition: all 1s;
         pointer-events: none;
     }
+    
+    .popup_text input:invalid{
+        background-color: red;
+    }
 
-    .popup_text input:valid+label,  .popup_text input:focus+label{
+    .popup_text .active+label,  .popup_text input:focus+label{
         color: hsl(120, 100%, 25%);
         transform: translate(0px,-42px);
     }
@@ -191,7 +215,7 @@
         transition: all 1s;
     }
 
-    .popup_text input:valid+label::after, .popup_text input:focus+label::after{
+    .popup_text .active+label::after, .popup_text input:focus+label::after{
         opacity: 1;
     }
 
