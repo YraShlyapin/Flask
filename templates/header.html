@@ -1,6 +1,5 @@
 <div id="nav-bar">
     <p id="film">Все о <span> фильмах</span></p>
-    
     <div id="user">
         <button value="register" class="popup_link">регистрация</button>
         <button value="login" class="popup_link">вход</button>
@@ -14,7 +13,7 @@
             <button class="popup_close" value="login">×</button>
             <div class="popup_title">Вход</div>
             <div class="popup_text">
-                <form action="/add_user" method="post">
+                <form action="/log_in" method="post">
                     <!-- http://htmlbook.ru/html/input -->
                     <div>
                         <input type="text" id="username" class="valudebl" autocomplete="off" name="name">
@@ -25,6 +24,9 @@
                         <label for="passord">введите пароль</label>
                     </div>
                     <button type="submit" class="posts">войти</button>
+                    {% if ban_reg %}
+                    <p style="color: red;" class="error_popup">вы ввели не правельный логин или пароль</p>
+                    {% endif %}
                 </form>
             </div>
         </div>
@@ -38,14 +40,14 @@
             <button class="popup_close" value="register">×</button>
             <div class="popup_title">Регистрация</div>
             <div class="popup_text">
-                <form action="#" method="post">
+                <form action="/add_user" method="post">
                     <!-- http://htmlbook.ru/html/input -->
                     <div>
-                        <input type="text" id="username" class="valudebl" autocomplete="off">
+                        <input type="text" id="username" class="valudebl" autocomplete="off" name="name">
                         <label for="username">введите имя</label>
                     </div>
                     <div>
-                        <input type="text" id="passord" class="valudebl" autocomplete="off">
+                        <input type="text" id="passord" class="valudebl" autocomplete="off" name="password">
                         <label for="passord">введите пароль</label>
                     </div>
                     <div>
@@ -122,6 +124,13 @@
     .popup.open{
         opacity: 1;
         visibility: visible;
+    }
+
+    .error_popup{
+        color: red;
+        position: absolute;
+        right: 35px;
+        bottom: 35px;
     }
 
     .popup.open .popup_body{

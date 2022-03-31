@@ -1,4 +1,5 @@
 import os
+from unittest import result
 from flask import Flask, redirect, render_template, url_for, request
 from db.main import check_password, get_User, init_db_app, get_db, add_entities, delete_entitie,add_User
 from entities.Movie import Movie
@@ -19,7 +20,7 @@ init_db_app(app)
 @app.route("/")
 def main():
     db = get_db()
-    return render_template("card.html", all = db.execute("SELECT * FROM movie"))
+    return render_template("card.html", all = db.execute("SELECT * FROM movie"),ban_reg=False)
 
 
 @app.route("/add_movie",methods=["POST"])
@@ -41,7 +42,10 @@ def add_user():
 
 @app.route("/log_in",methods=["POST"])
 def log_in():
-    print(check_password(User(request.form.get("name"),request.form.get("password"))))
+    result = check_password(User(request.form.get("name"),request.form.get("password")))
+    print(result)
+    if not result:
+        return redirect(url_for('main'))
     return redirect(url_for('main'))
 
 if __name__ == "__main__":

@@ -80,8 +80,11 @@ def get_User():
 
 def check_password(user:User):
     db = get_db()
-    password = db.execute("SELECT password_ FROM user_ WHERE name_ = ?", (user.name,)).fetchone()[0]
-    return password==user.password
+    password = db.execute("SELECT password_ FROM user_ WHERE name_ = ?", (user.name,)).fetchone()
+    returned = None
+    if password:
+        returned = password[0]
+    return returned==user.password
 
 
 def add_User(user:User):
