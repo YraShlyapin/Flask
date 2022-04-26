@@ -8,41 +8,29 @@
 
 {% include 'header.html' with context %}
 
-    <form action="{{url_for('log_in')}}" method="post">
-        <input type="text" name="name">
-        <input type="text" name="password">
-        <button type="submit">войти</button>
+    <form action="{{ url_for('add_movie') }}" method="post" id="block" style="display: flex;justify-content: center;">
+        <div>
+            <label>
+                название фильма:
+                <input type="text" name="title" id="">
+                <br>
+            </label>
+            <label>
+                ссылка на картинку:
+                <input type="text" name="url" id=""><br>
+            </label>
+            <label>
+                описание фильма:
+                <input type="text" name="text" id=""><br>
+            </label>
+            
+            <button type="submit">запостить</button>
+        </div>
     </form>
 
-    <form action="{{url_for('add_user')}}" method="post">
-        <input type="text" name="name">
-        <input type="text" name="password">
-        <input type="text">
-        <button type="submit">зарегистрироватся</button>
-    </form>
-
-    <form action="{{ url_for('add_movie') }}" method="post" id="block">
-        <label>
-            название фильма:
-            <input type="text" name="title" id="">
-            <br>
-        </label>
-        <label>
-            ссылка на картинку:
-            <input type="text" name="url" id=""><br>
-        </label>
-        <label>
-            описание фильма:
-            <input type="text" name="text" id=""><br>
-        </label>
-        
-        <button type="submit">запостить</button>
-    </form>
-
-    <div id="content">
+    
         {%block content%}
         {%endblock%}
-    </div>
 </body>
 <style>
     #block label{
@@ -52,10 +40,6 @@
     #block input{
         right: 0;
     }
-    #content{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
+    
 </style>
 </html>

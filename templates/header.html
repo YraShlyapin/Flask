@@ -51,10 +51,10 @@
                         <label for="passord">введите пароль</label>
                     </div>
                     <div>
-                        <input type="text" id="passord" class="valudebl" autocomplete="off" pattern="[A-Z]">
+                        <input type="text" id="passord" class="valudebl" autocomplete="off">
                         <label for="passord">повторите пароль</label>
                     </div>
-                    <button type="submit" class="posts">войти</button>
+                    <button type="submit" class="posts">зарегистрироватся</button>
                 </form>
             </div>
         </div>
@@ -72,6 +72,15 @@
         }
         else{
             validebl.classList.remove('active')
+        }
+    },10)
+    const second = validebls[validebls.length-1]
+    const first = validebls[validebls.length-2]
+    setInterval(()=>{
+        if (second.value==first.value){
+            second.classList.remove('dead')
+        }else {
+            second.classList.add('dead')
         }
     },10)
 </script>
@@ -327,5 +336,8 @@
     
     :root {
         ---green:#98FB98;
+    }
+    .dead{
+        background-color: red;
     }
 </style>

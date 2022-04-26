@@ -2,12 +2,14 @@
 
 {%block content%}
     {%if all%}
+    <div id="content">
         {%for item in all %}
-            <a href="#" class="card">
+        <!-- coo9 -->
+            <a href="card/{{item.title}}" class="card">
                 <div>
                     {{item.id}}
                     <h1>{{item.title}}</h1>
-                    <img src="{{item.url_}}" alt="" width="200px">
+                    <img src="{{ item.url_ }}" alt="" width="200px">
 <!--                    <p>{{item.text_}}</p>-->
                 </div>
                 <form action="{{url_for('delete_movie')}}" method="post">
@@ -27,5 +29,13 @@
                 }
             </style>
         {%endfor%}
+    </div>
     {%endif%}
 {% endblock %}
+<style>
+    #content{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+</style>

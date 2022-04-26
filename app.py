@@ -1,4 +1,5 @@
 import os
+from select import select
 from unittest import result
 from flask import Flask, redirect, render_template, url_for, request
 from db.main import check_password, get_User, init_db_app, get_db, add_entities, delete_entitie,add_User
@@ -47,6 +48,14 @@ def log_in():
     if not result:
         return redirect(url_for('main'))
     return redirect(url_for('main'))
+
+@app.route("/card/<movie>")
+def card(movie):
+    db = get_db()
+    select = db.execute("SELECT * FROM movie where title = ?",(str(movie),)).fetchall()[0]
+    if select!=None:
+        return render_template("movieSeen.html",all = select, ban_reg=False)
+    return redirect(url_for('not404'))
 
 if __name__ == "__main__":
     app.run(debug=True)
