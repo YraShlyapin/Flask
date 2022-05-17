@@ -76,15 +76,19 @@
     },10)
     const second = validebls[validebls.length-1]
     const first = validebls[validebls.length-2]
+    console.log(second.value)
     setInterval(()=>{
         if (second.value==first.value){
             second.classList.remove('dead')
         }else {
+            if (second.value==""){
+                second.classList.remove('dead')
+                return
+            }
             second.classList.add('dead')
         }
     },10)
 </script>
-
 <script>
     const popup_links = document.querySelectorAll(".popup_link")
     const popup_close = document.querySelectorAll(".popup_close")
@@ -107,7 +111,6 @@
         })
     }
 </script>
-
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
