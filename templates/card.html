@@ -23,11 +23,9 @@
     {%if all%}
     <div id="content">
         {%for item in all %}
-        <!-- coo9 -->
-            
-                <div style="width: 350px;">
-                    <a href="card/{{item.title}}And{{item.id}}" class="card">
-                        <h1 style="height: 80px;display: flex;justify-content:center;align-items:center;text-align: center;">{{item.title}}</h1>
+                <div style="position:relative;" class="card1">
+                    <a href="card/{{item.title}}And{{item.id}}" class="card CardD{{item.id}}">
+                        <!-- <h1 style="height: 80px;display: flex;justify-content:center;align-items:center;text-align: center;">{{item.title}}</h1> -->
                         <img src="{{ item.url_ }}" alt="" height="500px">
                     </a>
                     <form action="{{url_for('delete_movie')}}" method="post">
@@ -37,7 +35,30 @@
                         <button value="{{item.id}}" name="id" type="submit">редактировать</button>
                     </form>
                 </div>
-            
+                <style>
+                    .CardD{{item.id}}::after{
+                        content:'{{item.title}}';
+                        font-size: 26pt;
+                        position: absolute;
+                        top: 0;
+                        width: 100%;
+                        height: calc(100% - 46px);
+                        background-color: rgba(0, 0, 0, 0.50);
+                        color: white;
+                        display: flex;
+                        justify-content:center;
+                        align-items:center;
+                        text-align: center;
+                        z-index: 1000;
+                        opacity: 0;
+                        transition: opacity 200ms;
+                    }
+                    .card1:hover .CardD{{item.id}}::after{
+                        opacity: 1;
+                    }
+                    
+                    
+                </style>
         {%endfor%}
     </div>
     {%endif%}

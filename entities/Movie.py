@@ -9,4 +9,4 @@ class Movie:
         self.text = text
 
     def get(self):
-        return (self.title,self.url,self.text)
+        return self.title,self.url,self.text

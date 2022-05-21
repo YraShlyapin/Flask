@@ -2,12 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <title>gallery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
 <!-- http://htmlbook.ru/html/button/formmethod -->
 
 {% include 'header.html' with context %}
-{%block content%}
+{%block content %}
 {%endblock%}
 </body>
 <style>

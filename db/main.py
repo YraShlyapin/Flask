@@ -108,5 +108,10 @@ def add_coment(com):
     db.execute("INSERT INTO comment (UserName,text_,movie_id) VALUES (?,?,?)",(com))
     db.commit()
 
+def update(movie:Movie,id):
+    db = get_db()
+    db.execute("UPDATE movie SET title=?, url_=?, text_=? WHERE id = ?",(movie.title,movie.url,movie.text,id))
+    db.commit()
+
 # a = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 # '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'

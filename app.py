@@ -1,7 +1,6 @@
 import os
-from select import select
 from flask import Flask, redirect, render_template, url_for, request,make_response
-from db.main import check_password, add_coment, init_db_app, get_db, add_entities, delete_entitie,add_User
+from db.main import check_password, add_coment, init_db_app, get_db, add_entities, delete_entitie,add_User,update
 from entities.Movie import Movie
 from entities.User import User
 from entities.Comment import Comment
@@ -84,18 +83,22 @@ def card(movie,id):
 
 @app.route("/addComment<id>",methods=["POST"])
 def add_comment(id):
-    db = get_db()
     Coment = Comment(request.cookies.get("user"),id,request.form.get('text'))
-    db = add_coment(Coment.get())
+    add_coment(Coment.get())
     return '<script>document.location.href = document.referrer</script>'
 
-@app.route("/edit_movie")
+@app.route("/edit_movie",methods=["POST","GET"])
 def edit_movie():
     db = get_db()
-    card = db.execute("SELECT * FROM movie WHERE id=?",(request.args.get("id"),)).fetchall()[0]
-    print(card)
-    all = db.execute("SELECT * FROM movie")
-    return render_template("editeMovie.html",register=request.cookies.get("user"),card = card,all=all)
+    if request.method=="GET":
+        card = db.execute("SELECT * FROM movie WHERE id=?",(request.args.get("id"),)).fetchall()[0]
+        print(card)
+        all = db.execute("SELECT * FROM movie")
+        return render_template("editeMovie.html",register=request.cookies.get("user"),card = card,all=all)
+    movie = Movie(request.form.get("title"),request.form.get("url"),request.form.get("text"))
+    update(movie,request.form.get("id"))
+    return redirect(url_for("main"))
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
