@@ -1,9 +1,18 @@
 <div id="nav-bar">
-    <p id="film">Все о <span> фильмах</span></p>
-    <div id="user">
-        <button value="register" class="popup_link">регистрация</button>
-        <button value="login" class="popup_link">вход</button>
-    </div>
+    <a href="/" id="a"><p id="film">Все о <span> фильмах</span></p></a>
+        {% if register %}
+        <div id="user1">
+            <h2 style="font-weight: 100;">{{ register }}</h2>
+            <form>
+                <button formaction="/exit" formmethod="post" type="submit">выход</button>
+            </form>
+        </div>
+        {% else %}
+        <div id="user">
+            <button value="register" class="popup_link">регистрация</button>
+            <button value="login" class="popup_link">вход</button>
+        </div>
+        {% endif %}
 </div>
 
 <div id="login" class="popup">
@@ -51,7 +60,7 @@
                         <label for="passord">введите пароль</label>
                     </div>
                     <div>
-                        <input type="text" id="passord" class="valudebl" autocomplete="off">
+                        <input type="text" id="passord" class="valudebl" autocomplete="off" name="passwordTwo">
                         <label for="passord">повторите пароль</label>
                     </div>
                     <button type="submit" class="posts">зарегистрироватся</button>
@@ -118,6 +127,10 @@
 
     *{
         margin: 0;
+    }
+    #a{
+        text-decoration: none;
+        color: #fff;
     }
     .popup{
         position: fixed;
@@ -334,7 +347,17 @@
         margin-right: 30px;
         width: 215px;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #nav-bar #user1{
+        margin-left: auto;
+        margin-right: 30px;
+        width: 125px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
     }
     
     :root {

@@ -1,6 +1,37 @@
 {% extends "gallery.html" %}
 
 {%block content%}
-    <h1>{{all.title}}</h1>
-    {{all.text_}}
+<h1>{{all.title}}</h1>
+    <div id="asd">
+        <p style="font-size: 15pt;">
+            <img src="{{ all.url_ }}" height="500px">
+            {{all.text_}}
+        </p>
+    </div>
+    {% if register %}
+    <form action="/addComment{{all.id}}" method="post">
+        <input type="text" name="text">
+        <button type="submit">asd</button>
+    </form>
+    {% endif %}
+
+    Коментарии
+
+    {%for item in comments %}
+    <div style="font-size: 14pt;">
+        {{loop.index}}) {{item.UserName}}: {{item.text_}}
+    </div>
+        
+    {% endfor %}
+    <style>
+        #asd{
+            display: flex;
+        }
+        img{
+            float: left;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
 {% endblock %}
+

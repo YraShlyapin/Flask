@@ -1,4 +1,5 @@
 import sqlite3
+from entities.Comment import Comment
 from flask import Flask, g,current_app
 from flask.cli import with_appcontext
 import click
@@ -11,6 +12,7 @@ def init_db_app(app:Flask):
     app.cli.add_command(init_db)
     app.cli.add_command(add_test)
     app.cli.add_command(delete_all)
+    app.cli.add_command(delete_people)
 
 def get_db():
     if 'db' not in g:
@@ -59,9 +61,18 @@ def delete_all():
         удалить всю базу movie
     """
     db = get_db()
-    db.execute("DELETE FROM movie")
+    db.execute("DELETE FROM comment")
     db.commit()
 
+@click.command('delete_people')
+@with_appcontext
+def delete_people():
+    """
+        удалить всю базу movie
+    """
+    db = get_db()
+    db.execute("DELETE FROM user_")
+    db.commit()
 
 @click.command('add_test')
 @with_appcontext
@@ -90,6 +101,11 @@ def check_password(user:User):
 def add_User(user:User):
     db = get_db()
     db.execute("INSERT INTO user_ (name_,password_) VALUES (?,?)",(user.get()))
+    db.commit()
+
+def add_coment(com):
+    db = get_db()
+    db.execute("INSERT INTO comment (UserName,text_,movie_id) VALUES (?,?,?)",(com))
     db.commit()
 
 # a = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'

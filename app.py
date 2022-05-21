@@ -1,10 +1,11 @@
 import os
 from select import select
-from unittest import result
-from flask import Flask, redirect, render_template, url_for, request
-from db.main import check_password, get_User, init_db_app, get_db, add_entities, delete_entitie,add_User
+from flask import Flask, redirect, render_template, url_for, request,make_response
+from db.main import check_password, add_coment, init_db_app, get_db, add_entities, delete_entitie,add_User
 from entities.Movie import Movie
 from entities.User import User
+from entities.Comment import Comment
+
 
 
 app = Flask(__name__)
@@ -21,7 +22,14 @@ init_db_app(app)
 @app.route("/")
 def main():
     db = get_db()
-    return render_template("card.html", all = db.execute("SELECT * FROM movie"),ban_reg=False)
+    user = db.execute("SELECT * FROM user_ WHERE name_=?",(request.cookies.get("user"),)).fetchall()
+    print(user)
+    if user==[]:
+        res = make_response(render_template("card.html", all = db.execute("SELECT * FROM movie"),ban_reg=False,register=request.cookies.get("user")))
+        res.set_cookie('user', max_age=0)
+        return res
+    res = make_response(render_template("card.html", all = db.execute("SELECT * FROM movie"),ban_reg=False,register=request.cookies.get("user")))
+    return res
 
 
 @app.route("/add_movie",methods=["POST"])
@@ -37,25 +45,57 @@ def delete_movie():
 
 @app.route("/add_user",methods=["POST"])
 def add_user():
-    newUser = User(request.form.get('name'),request.form.get('password'))
-    add_User(newUser)
-    return redirect(url_for('main'))
+    db = get_db().execute("SELECT * FROM user_ WHERE name_=?",(request.form.get('name'),)).fetchall()
+    if request.form.get('password')==request.form.get('passwordTwo') and db==[]:
+        res = make_response('<script>document.location.href = document.referrer</script>')
+        res.set_cookie('user', max_age=0)
+        newUser = User(request.form.get('name'),request.form.get('password'))
+        add_User(newUser)
+        res.set_cookie('user', newUser.name)
+        return res
+    return '<script>document.location.href = document.referrer</script>'
 
 @app.route("/log_in",methods=["POST"])
 def log_in():
-    result = check_password(User(request.form.get("name"),request.form.get("password")))
+    nowUser = User(request.form.get("name"),request.form.get("password"))
+    result = check_password(nowUser)
     print(result)
+    res = make_response('<script>document.location.href = document.referrer</script>')
+    res.set_cookie('user', max_age=0)
     if not result:
-        return redirect(url_for('main'))
-    return redirect(url_for('main'))
+        return res
+    res.set_cookie('user', nowUser.name)
+    return res
 
-@app.route("/card/<movie>")
-def card(movie):
+@app.route("/exit",methods=["POST"])
+def exit():
+    res = make_response('<script>document.location.href = document.referrer</script>')
+    res.set_cookie('user', max_age=0)
+    return res
+
+@app.route("/card/<movie>And<id>")
+def card(movie,id):
     db = get_db()
-    select = db.execute("SELECT * FROM movie where title = ?",(str(movie),)).fetchall()[0]
-    if select!=None:
-        return render_template("movieSeen.html",all = select, ban_reg=False)
-    return redirect(url_for('not404'))
+    select = db.execute("SELECT * FROM movie where title = ? AND id=?",(str(movie),id,)).fetchall()
+    comment = db.execute("SELECT * FROM comment where movie_id = ?",(id,)).fetchall()
+    if select==[]:
+        return render_template("404.html",url=request.url)
+    return render_template("movieSeen.html",all = select[0], ban_reg=False,register=request.cookies.get("user"),comments=comment)
+
+@app.route("/addComment<id>",methods=["POST"])
+def add_comment(id):
+    db = get_db()
+    Coment = Comment(request.cookies.get("user"),id,request.form.get('text'))
+    db = add_coment(Coment.get())
+    return '<script>document.location.href = document.referrer</script>'
+
+@app.route("/edit_movie")
+def edit_movie():
+    db = get_db()
+    card = db.execute("SELECT * FROM movie WHERE id=?",(request.args.get("id"),)).fetchall()[0]
+    print(card)
+    all = db.execute("SELECT * FROM movie")
+    return render_template("editeMovie.html",register=request.cookies.get("user"),card = card,all=all)
 
 if __name__ == "__main__":
     app.run(debug=True)
