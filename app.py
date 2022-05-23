@@ -17,7 +17,6 @@ init_db_app(app)
 #     with open("static/index.html", "r", encoding='utf-8') as file:
 #         return file.read()
 
-
 @app.route("/")
 def main():
     db = get_db()

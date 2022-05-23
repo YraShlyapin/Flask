@@ -1,0 +1,77 @@
+{%if all%}
+    <div id="content">
+        {%for item in all %}
+            <div class="gart">
+                <div style="position:relative;" class="card1">
+                    <a href="card/{{item.title}}And{{item.id}}" class="card CardD{{item.id}}">
+                        <!-- <h1 style="height: 80px;display: flex;justify-content:center;align-items:center;text-align: center;">{{item.title}}</h1> -->
+                        <img src="{{ item.url_ }}" alt="" height="500px">
+                    </a>
+                    
+                </div>
+                <div style="display: flex;">
+                    <form action="{{url_for('delete_movie')}}" method="post" style="margin-right: 10px;">
+                        <button value="{{item.id}}" name="id" type="submit" class="delete-edite-button">удалить</button>
+                    </form>
+                    <form action="{{url_for('edit_movie')}}" method="get">
+                        <button value="{{item.id}}" name="id" type="submit" class="delete-edite-button">редактировать</button>
+                    </form>
+                </div>
+            </div>
+            
+            <style>
+                .CardD{{item.id}}::after{
+                    content:'{{item.title}}';
+                    font-size: 26pt;
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.65);
+                    color: white;
+                    display: flex;
+                    justify-content:center;
+                    align-items:center;
+                    text-align: center;
+                    opacity: 0;
+                    transition: opacity 200ms;
+                }
+                .card1:hover .CardD{{item.id}}::after{
+                    opacity: 1;
+                }
+            </style>
+        {%endfor%}
+    </div>
+    {%endif%}
+<style>
+    #content{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        
+    }
+    .card{
+        text-decoration: none;
+        color: black;
+    }
+    .gart{
+        margin-top: 20px;
+    }
+    .delete-edite-button{
+        margin-top: 5px;
+        font-size: 14pt;
+        padding: 5px 10px;
+        background-color: rgba(0, 0, 0, 0);
+        border: 1px solid black;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 300ms;
+        
+    }
+    .delete-edite-button:hover{
+        background-color: rgb(152, 251, 152);
+        box-shadow: 0px 0px 10px 7px rgba(152, 251, 152, 0.4);
+        color: black;
+    }
+</style>
